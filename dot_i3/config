@@ -162,8 +162,8 @@ set $ws3 "3:gpt"
 set $ws4 "4:rp"
 set $ws5 "5:lib"
 set $ws6 "6:notes"
-set $ws7 7
-set $ws8 8
+set $ws7 "7:workspace"
+set $ws8 "8:scratchpad"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -218,6 +218,7 @@ for_window [class="Pavucontrol"] floating enable
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Yad"] floating enable sticky enable border normal
+for_window [class="qalculate-qt"] floating enable sticky enable border normal
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus

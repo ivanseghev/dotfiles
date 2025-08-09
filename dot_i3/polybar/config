@@ -108,14 +108,14 @@ border-size = 0
 
 modules-left = rofi google-chrome-stable noi rednotebook screenshot grammatic translate dictate
 modules-center = i3
-modules-right = date break
+modules-right = date popup-calendar kdeconnect break 
 
 ;dim-value = 1.0
 
 ;tray-detached = false
 ;tray-offset-x = 0
 ;tray-offset-y = 0
-tray-padding = 4
+;tray-padding = 4
 ;tray-size = 22
 tray-maxsize = 22
 ;tray-scale = 1.0
@@ -377,20 +377,29 @@ type = custom/text
 content = 󱜸
 content-foreground = ${colors.foreground}
 content-background = ${colors.background}
-click-left = noi-deskop &
+click-right = noi-deskop &
 
 ################################################################################
 
 [module/break]
 type = custom/text
 content = |
-content-padding = 0
+;content-padding = 0
 ;content-margin = 0
 content-foreground = ${colors.foreground-active}
 content-background =  ${colors.background}
 ;content-underline = ${colors.adapta-cyan}
 
 ################################################################################
+
+[module/system-bluetooth-bluetoothctl]
+type = custom/script
+exec = ~/.i3/polybar/scripts/system-bluetooth-bluetoothctl.sh
+tail = true
+click-left = ~/.i3/polybar/scripts/system-bluetooth-bluetoothctl.sh --toggle &
+
+################################################################################
+
 
 [module/date]
 ;https://github.com/jaagr/polybar/wiki/Module:-date
@@ -403,9 +412,6 @@ date = "%d %b %Y"
 date-alt = "%a %d %b"
 time = %H:%M
 time-alt = %H:%M
-;click-right = ~/.i3/polybar/scripts/popup-calendar.sh --popup &
-;format = "%{A1:~/.i3/polybar/scripts/popup-calendar.sh --popup &:} 🕓 <label> %{A}"
-;format-prefix = " "
 format-prefix =
 format-prefix-foreground = ${color.foreground}
 ;format-underline = ${colors.foreground-alt}
@@ -429,6 +435,16 @@ click-middle = alacritty -e nvim ~/Bin/dictate-whisper-continuous.sh
 ;click-right = touch /tmp/stop-listen
 
 ########################################################################################
+
+[module/popup-calendar]
+type = custom/text
+content = ""
+content-foreground = ${colors.foreground}
+content-background =  ${colors.background}
+click-left = ~/.i3/polybar/scripts/popup-calendar.sh --popup &
+
+################################################################################
+
 
 [module/explorer]
 type = custom/text
@@ -551,6 +567,16 @@ content-background =  ${colors.background}
 ;content-underline = ${colors.adapta-cyan}
 click-left = insync show
 click-right = insync hide
+
+################################################################################
+
+[module/kdeconnect]  
+type = custom/text  
+content = ""
+content-foreground = ${colors.foreground}
+content-background = ${colors.background}
+click-left = ~/.i3/polybar/scripts/polybar-kdeconnect.sh --menu
+click-right = ~/.i3/polybar/scripts/polybar-kdeconnect.sh --device-menu
 
 ################################################################################
 
