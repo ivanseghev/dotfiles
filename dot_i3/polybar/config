@@ -90,9 +90,9 @@ foreground = ${colors.foreground}
 border-color = ${colors.primary}
 border-size = 0
 
-modules-left = rofi google-chrome-stable noi rednotebook screenshot grammatic translate dictate
+modules-left = rofi google-chrome-stable noi rednotebook screenshot grammatic translate dictate knots wordpress
 modules-center = i3
-modules-right = date popup-calendar kdeconnect bluetooth break 
+modules-right = date popup-calendar kdeconnect send2kindle bluetooth break 
 
 ;dim-value = 1.0
 
@@ -177,7 +177,7 @@ border-color = ${colors.primary}
 border-size = 0
 
 modules-left = uptime temperature1 
-modules-center = filesystem load-average memory3 
+modules-center = sysrofi filesystem load-average memory3 
 modules-right = openweathermap-fullfeatured xkeyboard powermenu
 
 separator = %{F#6790EB}|%{F-}
@@ -330,30 +330,28 @@ format-background = ${colors.background}
 
 [module/noi]
 type = custom/text
-content = 󱜸
-content-foreground = ${colors.foreground}
-content-background = ${colors.background}
-click-right = noi-deskop &
+label = 󱜸
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
+click-left = noi-deskop &
 
 ################################################################################
 
 [module/break]
 type = custom/text
-content = |
-;content-padding = 0
-;content-margin = 0
-content-foreground = ${colors.foreground-active}
-content-background =  ${colors.background}
-;content-underline = ${colors.adapta-cyan}
+label = |
+label-foreground = ${colors.foreground-active}
+label-background =  ${colors.background}
 
 ################################################################################
 
 [module/bluetooth]
 type = custom/text
-content = 󰂯
-content-foreground = ${colors.foreground}
-content-background = ${colors.background}
+label = 󰂯
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
 click-left = ~/.i3/polybar/scripts/polybar-bluetooth.sh --list-devices
+click-middle = alacritty -e nvim ~/.i3/polybar/scripts/polybar-bluetooth.sh
 click-right = ~/.i3/polybar/scripts/polybar-bluetooth.sh --menu
 
 ################################################################################
@@ -381,24 +379,19 @@ label = %date% %time%
 
 [module/dictate]
 type = custom/text
-content = "󰔊 "
-;content = Dictate
-;content-padding = 1
-;content-margin = 1
-content-foreground = ${colors.foreground}
-content-background =  ${colors.background}
-;content-underline = ${colors.adapta-cyan}
+label = "󰔊"
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
 click-left = ~/Bin/dictate-whisper-continuous.sh
 click-middle = alacritty -e nvim ~/Bin/dictate-whisper-continuous.sh
-;click-right = touch /tmp/stop-listen
 
 ########################################################################################
 
 [module/popup-calendar]
 type = custom/text
-content = ""
-content-foreground = ${colors.foreground}
-content-background =  ${colors.background}
+label = ""
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
 click-left = ~/.i3/polybar/scripts/popup-calendar.sh --popup &
 
 ################################################################################
@@ -459,9 +452,9 @@ format-unmounted-background = ${colors.background}
 
 [module/google-chrome-stable]
 type = custom/text
-content =  
-content-foreground = ${colors.foreground}
-content-background =  ${colors.background}
+label =  
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
 click-left = google-chrome-stable &
 click-right = killall google-chrome-stable
 
@@ -469,9 +462,9 @@ click-right = killall google-chrome-stable
 
 [module/grammatic]
 type = custom/text
-content = 󰓆
-content-foreground = ${colors.foreground}
-content-background =  ${colors.background}
+label = 󰓆
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
 click-left = ~/Bin/grammar_fix.sh &
 click-middle = alacritty -e nvim ~/Bin/grammar_fix.sh 
 click-right = killall grammar_fix.sh
@@ -480,9 +473,9 @@ click-right = killall grammar_fix.sh
 
 [module/foliate]
 type = custom/text
-content = 
-content-foreground = ${colors.foreground}
-content-background = ${colors.background}
+label = 
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
 click-left = foliate &
 click-right = killall foliate
 
@@ -490,12 +483,9 @@ click-right = killall foliate
 
 [module/insync]
 type = custom/text
-content =""
-content-padding = 1
-;content-margin = 1
-content-foreground = ${colors.foreground}
-content-background =  ${colors.background}
-;content-underline = ${colors.adapta-cyan}
+label =""
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
 click-left = insync show
 click-right = insync hide
 
@@ -503,10 +493,11 @@ click-right = insync hide
 
 [module/kdeconnect]  
 type = custom/text  
-content = ""
-content-foreground = ${colors.foreground}
-content-background = ${colors.background}
+label = ""
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
 click-left = ~/.i3/polybar/scripts/polybar-kdeconnect.sh --menu
+click-middle = alacritty -e nvim ~/.i3/polybar/scripts/polybar-kdeconnect.sh
 click-right = ~/.i3/polybar/scripts/polybar-kdeconnect.sh --device-menu
 
 ################################################################################
@@ -579,11 +570,10 @@ format-online-background = ${colors.background}
 
 [module/powermenu]
 type = custom/text
-;; icon shut down
-content = ""
-content-padding = 1
-content-foreground = ${colors.foreground}
-content-background = ${colors.background}
+label = ""
+label-padding = 1
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
 click-left = /usr/bin/archlinux-logout
 click-right = /usr/bin/archlinux-logout
 
@@ -591,9 +581,9 @@ click-right = /usr/bin/archlinux-logout
 
 [module/rednotebook]
 type = custom/text
-content = 
-content-background = ${colors.background}
-content-foreground = ${colors.foreground}
+label = 
+label-background = ${colors.background}
+label-foreground = ${colors.foreground}
 click-left = exec rednotebook
 click-right = killall rednotebook
 
@@ -601,24 +591,36 @@ click-right = killall rednotebook
 
 [module/rofi]
 type = custom/text
-content = 
-content-padding = 1%
-content-background = ${colors.background}
-content-foreground = ${colors.foreground}
-click-left = exec rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.i3/polybar/scripts/rofi/launcher2.rasi
+label = 
+label-padding = 1%
+label-background = ${colors.background}
+label-foreground = ${colors.foreground}
+;click-left = exec rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.i3/polybar/scripts/rofi/launcher2.rasi
+click-left = exec rofi -show window
 ;click-right = exec rofi -theme fancy -show drun -show-icons -lines 6 -columns 4
 click-right = exec xfce4-appfinder
 
 ################################################################################
 
+[module/send2kindle]
+type = custom/text
+label = "󱚄"
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
+click-left = alacritty -e ~/Bin/send_to_kindle.sh
+click-middle = alacritty -e nvim ~/Bin/send_to_kindle.sh
+
+
+################################################################################
+
 [module/screenshot]
 type = custom/text
-content-foreground = ${colors.foreground}
-content-background = ${colors.background}
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
 ;content-overline = ${colors.background}
 ;content-underline = ${colors.background}
-content-padding = 0
-content = 
+label-padding = 0
+label = 
 click-left = flameshot gui &
 ;; click-right = xfce4-screenshooter &
 click-right = gnome-screenshot -i &
@@ -627,20 +629,52 @@ click-right = gnome-screenshot -i &
 
 [module/sysmenu]
 type = custom/text
-content = "  襤  "
-content-foreground = ${color.foreground}
+label = "  襤  "
+label-foreground = ${color.foreground}
 click-left = archlinux-logout
 click-right = archlinux-logout
 
 ################################################################################
 
+[module/sysrofi]
+type = custom/text
+label = 
+format = Sys: <label>
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+click-left = ~/Bin/sys-rofi.sh
+click-middle = alacritty -e nvim ~/Bin/sys-rofi.sh
+
+
+################################################################################
+
+[module/knots]
+type = custom/text
+label = "󱋿"
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
+click-left = alacritty -e ~/Bin/knots/search_pdfs.sh
+click-middle = alacritty -e nvim ~/Bin/knots/search_pdfs.sh
+
+################################################################################
+
+[module/wordpress]
+type = custom/text
+label = " "
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
+click-left = alacritty -e ~/Bin/wp_clean.sh
+click-middle = alacritty -e nvim ~/Bin/wp_clean.sh
+
+##############################################################################
+
 [module/telegram]
 type = custom/text
-content = 
-content-padding = 1
+label = 
+label-padding = 1
 ;content-margin = 1
-content-foreground = ${colors.foreground}
-content-background =  ${colors.background}
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
 ;content-underline = ${colors.db-cyan}
 click-left = telegram-desktop &
 click-right = killall telegram-desktop &
@@ -689,9 +723,9 @@ ramp-foreground =${colors.foreground}
 
 [module/translate]
 type = custom/text
-content =
-content-foreground = ${colors.foreground}
-content-background =  ${colors.background}
+label =
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
 click-left = ~/Bin/translate-whisper-continuous.sh
 click-middle = alacritty -e nvim ~/Bin/translate-whisper-continuous.sh
 click-right = ~/Bin/translate-whisper-continuous.sh
