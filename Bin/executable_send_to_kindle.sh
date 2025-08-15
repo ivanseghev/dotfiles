@@ -2,6 +2,7 @@
 
 KINDLE_MOUNT="/run/media/${USER}/Kindle"
 DOCUMENTS_DIR="$KINDLE_MOUNT/documents"
+DOWNLOADS_DIR="$HOME/Downloads"
 
 # Ensure ebook-convert exists
 if ! command -v ebook-convert &> /dev/null; then
@@ -9,43 +10,33 @@ if ! command -v ebook-convert &> /dev/null; then
     exit 1
 fi
 
-# Ensure udiskie is available
-# if ! command -v udiskie-mount &> /dev/null; then
-#     echo "❌ udiskie-mount not found. Please install udiskie."
-#     exit 1
-# fi
-
 # Check mount
 if [ ! -d "$KINDLE_MOUNT" ] || [ ! -d "$DOCUMENTS_DIR" ]; then
-    echo "🔍 Kindle not mounted at $KINDLE_MOUNT"
+    notify-send "🔍 Kindle not mounted at $KINDLE_MOUNT"
     exit 1
-    # udiskie-mount -A -n kindle || {
-    #     echo "❌ Failed to mount Kindle. Is it connected?"
-    #     exit 1
-    # }
-
-    # Wait for mount to appear
-    # for i in {1..10}; do
-    #     [ -d "$DOCUMENTS_DIR" ] && break
-    #     sleep 1
-    # done
-    #
-    # if [ ! -d "$DOCUMENTS_DIR" ]; then
-    #     echo "❌ Still can't find Kindle mount point at $DOCUMENTS_DIR"
-    #     exit 1
-    # fi
 fi
 
-# Convert and copy books
-for input_file in "$@"; do
-    if [ ! -f "$input_file" ]; then
-        echo "⚠️ Skipping: $input_file not found."
-        continue
-    fi
+# Select books via fzf
+echo "📂 Scanning for books in $DOWNLOADS_DIR..."
+selected_files=$(find "$DOWNLOADS_DIR" -type f \( \
+    -iname "*.pdf" -o -iname "*.epub" -o -iname "*.mobi" -o -iname "*.fb2" \
+    \) | fzf --multi --prompt="Select books to send to Kindle: " --preview 'ebook-meta {} 2>/dev/null || file {}')
 
+# Exit if nothing selected
+[ -z "$selected_files" ] && echo "❌ No books selected." && exit 1
+
+# Convert and copy
+while IFS= read -r input_file; do
     filename=$(basename "$input_file")
     base="${filename%.*}"
     mobi_file="/tmp/${base}.mobi"
+
+    # Skip conversion if already .mobi
+    if [[ "${filename,,}" == *.mobi ]]; then
+        echo "📤 Copying MOBI: $input_file → $DOCUMENTS_DIR/"
+        cp -v "$input_file" "$DOCUMENTS_DIR/"
+        continue
+    fi
 
     echo "📚 Converting: $input_file → $mobi_file"
     ebook-convert "$input_file" "$mobi_file" || {
@@ -55,7 +46,6 @@ for input_file in "$@"; do
 
     echo "📤 Copying to Kindle: $mobi_file → $DOCUMENTS_DIR/"
     cp -v "$mobi_file" "$DOCUMENTS_DIR/"
-done
+done <<< "$selected_files"
 
 echo "✅ Done."
-
