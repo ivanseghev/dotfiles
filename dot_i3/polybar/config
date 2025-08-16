@@ -176,9 +176,9 @@ foreground = ${colors.foreground}
 border-color = ${colors.primary}
 border-size = 0
 
-modules-left = uptime temperature1 
-modules-center = sysrofi filesystem load-average memory3 
-modules-right = openweathermap-fullfeatured xkeyboard powermenu
+modules-left = uptime mpd 
+;modules-center = sysrofi temperature1 filesystem load-average memory3 
+modules-right = sysrofi temperature1 filesystem load-average memory3 openweathermap-fullfeatured xkeyboard powermenu
 
 separator = %{F#6790EB}|%{F-}
 
@@ -546,23 +546,26 @@ format-background = ${colors.background}
 [module/mpd]
 ;https://github.com/jaagr/polybar/wiki/Module:-mpd
 type = internal/mpd
-;format-online =  "<label-song>   <icon-prev>  <icon-stop>  <toggle>  <icon-next>"
-format-online =  "<label-song>  <bar-progress>"
+host = 192.168.100.192
+port = 6600
+format-online =  "%{A1:alacritty -e ncmpc:}<label-song>%{A}  <icon-prev>  <icon-stop>  <toggle>  <icon-next>"
+;format-online =  "<label-song>  <bar-progress>"
 ;format-online =  "<label-song>  <bar-progress> <icon-prev>  <icon-stop>  <toggle>  <icon-next>"
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
+icon-prev = 󰼨
+icon-stop = 󰙧
+icon-play = 󰐍
+icon-pause = 󰏦
+icon-next = 󰼧
+label-song = 󰽰 %artist% - %title%
 label-song-maxlen = 40
 label-song-ellipsis = true
-bar-progress-width = 10
-bar-progress-indicator = 
-bar-progress-fill = 
-bar-progress-empty = 
-bar-progress-fill-foreground = #ff0
-bar-progress-fill-background = ${colors.background}
-bar-progress-indicator-foreground = ${colors.foreground}
+;bar-progress-width = 10
+;bar-progress-indicator = 
+;bar-progress-fill = 
+;bar-progress-empty = 
+;bar-progress-fill-foreground = #ff0
+;bar-progress-fill-background = ${colors.background}
+;bar-progress-indicator-foreground = ${colors.foreground}
 format-online-foreground = ${colors.foreground}
 format-online-background = ${colors.background}
 
