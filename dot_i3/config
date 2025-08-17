@@ -148,8 +148,14 @@ bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
 
 # switch to monitor outputs
-bindsym $mod+F5 exec xrandr --output HDMI-0 --auto --primary --output DP-0 --off
-bindsym $mod+F6 exec xrandr --output DP-0 --auto --primary --output HDMI-0 --off
+bindsym $mod+F1 exec xrandr --output HDMI-0 --auto --primary --output DP-0 --off
+bindsym $mod+shift+F1 exec xrandr --output DP-0 --auto --primary --output HDMI-0 --off
+
+# mpc music control 
+bindsym $mod+F6 exec --no-startup-id mpc stop
+bindsym $mod+F7 exec --no-startup-id mpc prev
+bindsym $mod+F8 exec --no-startup-id mpc toggle
+bindsym $mod+F9 exec --no-startup-id mpc next
 
 # drop down terminal
 bindsym F12 exec --no-startup-id xfce4-terminal --drop-down; focus

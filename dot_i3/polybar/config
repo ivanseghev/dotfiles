@@ -333,7 +333,7 @@ type = custom/text
 label = 󱜸
 label-foreground = ${colors.foreground}
 label-background = ${colors.background}
-click-left = noi-deskop &
+click-left = noi-desktop &
 
 ################################################################################
 
@@ -548,7 +548,8 @@ format-background = ${colors.background}
 type = internal/mpd
 host = 192.168.100.192
 port = 6600
-format-online =  "%{A1:alacritty -e ncmpc:}<label-song>%{A}  <icon-prev>  <icon-stop>  <toggle>  <icon-next>"
+;format-online =  "%{A1:alacritty -e ncmpc:}<label-song>%{A}  <icon-prev>  <icon-stop>  <toggle>   <icon-next>"
+format-online = "%{A1:alacritty -e ncmpc:}<label-song>%{A}  %{A1:mpc prev:}󰼨%{A}  %{A1:mpc stop:}󰙧%{A}  <toggle>  %{A1:mpc next:}󰼧%{A}"
 ;format-online =  "<label-song>  <bar-progress>"
 ;format-online =  "<label-song>  <bar-progress> <icon-prev>  <icon-stop>  <toggle>  <icon-next>"
 icon-prev = 󰼨
