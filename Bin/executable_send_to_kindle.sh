@@ -49,3 +49,5 @@ while IFS= read -r input_file; do
 done <<< "$selected_files"
 
 echo "✅ Done."
+
+read -n 1 -s -r -p "Press any key to exit..."

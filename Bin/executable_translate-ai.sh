@@ -15,12 +15,59 @@ DOCKER_LOCAL_ENDPOINT="http://localhost:8000/v1/chat/completions"
 # ALL_MODELS="SYSTEM:llama-3.2-3B-Instruct-Q4_K_M!DOCKER:llama-3.2-3B-Instruct-Q4_K_M!OPENROUTER:mistral-7b-instruct!OPENROUTER:llama-3-8b-instruct!GROQ:llama-3.1-8b-instant!GROQ:llama-3.3-70b-versatile!GROQ:gemma2-9b-it"
 ALL_MODELS="GROQ:llama-3.3-70b-versatile!GROQ:gemma2-9b-it!OPENROUTER:mistralai/mistral-7b-instruct:free!OPENROUTER:meta-llama/llama-3.3-70b-instruct:free!DOCKER:llama-3.2-3B-Instruct-Q4_K_M!SYSTEM:llama-3.2-3B-Instruct-Q4_K_M"
 
+# === Speech to text ===
+WHISPER_BIN="/usr/bin/whisper-cli"
+MODEL="$HOME/Models/ggml-small.bin"
+TMP_WAV="/tmp/dictate.wav"
+TMP_TXT="/tmp/dictation.txt"
+LANG="ru"
+TIMEOUT_SEC=30  # auto-stop after 30 seconds
+
+# Start recording
+arecord -f cd -t wav -r 16000 -c 1 "$TMP_WAV" &
+REC_PID=$!
+
+# Show YAD Stop button with timeout
+yad --title="Dictation" \
+    --button="Stop":0 \
+    --timeout="$TIMEOUT_SEC" \
+    --timeout-indicator=bottom \
+    --text="Recording voice...\n\nPress Stop or wait ${TIMEOUT_SEC}s" \
+    --center \
+    --undecorated \
+    --on-top \
+    --skip-taskbar
+
+
+# When window closes or times out, stop recording
+kill "$REC_PID" 2>/dev/null
+wait "$REC_PID" 2>/dev/null
+
+# Notify and transcribe
+notify-send "🔎 Dictation" "Transcribing..."
+"$WHISPER_BIN" -m "$MODEL" -f "$TMP_WAV" -l "$LANG" -nt -otxt -of "${TMP_TXT%.*}" > /dev/null
+TEXT=$(< "$TMP_TXT")
+
+if [[ -z "$TEXT" ]]; then
+  notify-send "❗ Dictation failed" "No speech recognized"
+  exit 1
+fi
+
+# === End of dictation ===
+
+# Ensure UTF-8 locale for yad
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Sanitize text
+TEXT=$(iconv -f UTF-8 -t UTF-8//IGNORE <<< "$TEXT")
+
 # === YAD FORM ===
 FORM=$(yad --width=800 --height=500 --center \
     --title="Grammar & Lexical Check" \
     --form \
     --field="Model:CB" "$ALL_MODELS" \
-    --field="Enter text:TXT" "")
+    --field="Enter text:TXT" "$TEXT")
 
 # Cancel pressed
 [ $? -ne 0 ] && exit 0
@@ -59,12 +106,13 @@ case "$PROVIDER" in
 esac
 
 # === PROMPT TO SEND TO LLM ===
-PROMPT="You are an English language tutor. 
-Analyze the following text for grammar and vocabulary issues.
-Output:
-1. Corrected text
-2. Explanation of the changes
-3. Example sentences for improved usage.
+PROMPT="You are a professional bilingual translator specializing in Russian-to-English translation. 
+Your task is to produce accurate, fluent, and natural-sounding English translations of Russian text. 
+You must:
+- Correct minor spelling, grammatical, or stylistic issues if they exist in the source.
+- Keep meaning, tone, and nuance faithful to the original.
+- Do not explain, comment, or include transliterations.
+- Output only the translated English text, nothing else.
 
 Text:
 $INPUT_TEXT"
@@ -82,33 +130,14 @@ RESPONSE=$(curl -s "$ENDPOINT" \
     }" | jq -r '.choices[0].message.content')
 
 
-# === REQUEST ===
-# RAW_RESPONSE=$(mktemp)
-# curl -s "$ENDPOINT" \
-#     -H "Content-Type: application/json" \
-#     ${AUTH_HEADER:+-H "$AUTH_HEADER"} \
-#     -d "{
-#       \"model\": \"$MODEL_NAME\",
-#       \"messages\": [{\"role\": \"user\", \"content\": $ESCAPED_PROMPT}],
-#       \"temperature\": 0.3
-#     }" | tee "$RAW_RESPONSE" >/dev/null
-
-# === DEBUG OUTPUT ===
-# echo "---- RAW API RESPONSE ----"
-# cat "$RAW_RESPONSE"
-# echo "--------------------------"
-
-# === PARSE RESPONSE ===
-# RESPONSE=$(jq -r '.choices[0].message.content // empty' "$RAW_RESPONSE")
-
 # === SHOW RESULT ===
 yad --width=600 --height=400 \
-    --title="Grammar & Vocabulary Analysis" \
+    --title="Translation" \
     --text-info \
     --wrap <<< "$RESPONSE"
 
 # Extract only the corrected text
-CORRECTED=$(echo "$RESPONSE" | sed -n '/1\. Corrected text:/,/2\./p' | sed '1d;$d' | sed '/^$/d')
+# CORRECTED=$(echo "$RESPONSE" | sed -n '/1\. Corrected text:/,/2\./p' | sed '1d;$d' | sed '/^$/d')
 
 # Copy to clipboard (Linux X11/Wayland with xclip or wl-copy)
-echo -n "$CORRECTED" | xclip -selection clipboard
+echo "$RESPONSE" | xclip -selection clipboard

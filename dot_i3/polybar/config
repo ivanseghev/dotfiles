@@ -90,7 +90,7 @@ foreground = ${colors.foreground}
 border-color = ${colors.primary}
 border-size = 0
 
-modules-left = rofi google-chrome-stable noi rednotebook screenshot grammatic translate dictate knots wordpress
+modules-left = rofi google-chrome-stable noi rednotebook foliate screenshot translate-rofi dictate wordpress
 modules-center = i3
 modules-right = date popup-calendar kdeconnect send2kindle bluetooth break 
 
@@ -473,11 +473,11 @@ click-right = killall grammar_fix.sh
 
 [module/foliate]
 type = custom/text
-label = 
+label =  
+label-padding-right = 3px
 label-foreground = ${colors.foreground}
 label-background = ${colors.background}
 click-left = foliate &
-click-right = killall foliate
 
 ################################################################################
 
@@ -623,9 +623,9 @@ label-foreground = ${colors.foreground}
 label-background = ${colors.background}
 ;content-overline = ${colors.background}
 ;content-underline = ${colors.background}
-label-padding = 0
+;label-padding = 0
 label = 
-click-left = flameshot gui &
+click-left = ~/Bin/flameshot-fix.sh gui &
 ;; click-right = xfce4-screenshooter &
 click-right = gnome-screenshot -i &
 
@@ -725,14 +725,15 @@ ramp-foreground =${colors.foreground}
 
 ################################################################################
 
-[module/translate]
+[module/translate-rofi]
 type = custom/text
 label =
+label-padding-right = 3px
 label-foreground = ${colors.foreground}
 label-background =  ${colors.background}
-click-left = ~/Bin/translate-whisper-continuous.sh
-click-middle = alacritty -e nvim ~/Bin/translate-whisper-continuous.sh
-click-right = ~/Bin/translate-whisper-continuous.sh
+click-left = ~/Bin/translate-rofi.sh
+click-middle = alacritty -e nvim ~/Bin/translate-rofi.sh
+;click-right = ~/Bin/translate-whisper-continuous.sh
 
 ################################################################################
 
