@@ -92,7 +92,7 @@ border-size = 0
 
 modules-left = rofi google-chrome-stable noi rednotebook foliate screenshot translate-rofi dictate wordpress
 modules-center = i3
-modules-right = date popup-calendar kdeconnect send2kindle bluetooth break 
+modules-right = date popup-calendar kdeconnect display-manager send2kindle bluetooth break 
 
 ;dim-value = 1.0
 
@@ -176,7 +176,7 @@ foreground = ${colors.foreground}
 border-color = ${colors.primary}
 border-size = 0
 
-modules-left = uptime mpd 
+modules-left = cylon uptime mpd 
 ;modules-center = sysrofi temperature1 filesystem load-average memory3 
 modules-right = sysrofi temperature1 filesystem load-average memory3 openweathermap-fullfeatured xkeyboard powermenu
 
@@ -326,6 +326,17 @@ format-background = ${colors.background}
 ###############################################################################
 ############                       MODULES A-Z                      ############
 ################################################################################
+
+[module/cylon]
+type = custom/text
+label = 󱙝 
+label-padding-right = 5px
+label-foreground = ${colors.foreground}
+label-background = ${colors.background}
+click-left = alacritty -e cylon
+click-right = alacritty -e pacui
+
+
 ################################################################################
 
 [module/noi]
@@ -382,10 +393,21 @@ type = custom/text
 label = "󰔊"
 label-foreground = ${colors.foreground}
 label-background =  ${colors.background}
-click-left = ~/Bin/dictate-whisper-continuous.sh
+click-left = ~/Bin/dictate-whisper-continuous.sh -l ru
 click-middle = alacritty -e nvim ~/Bin/dictate-whisper-continuous.sh
+click-right = ~/Bin/dictate-whisper-continuous.sh -l en
 
 ########################################################################################
+
+[module/display-manager]
+type = custom/text
+label = "󱜤"
+label-foreground = ${colors.foreground}
+label-background =  ${colors.background}
+click-left = ~/Bin/display-manager.sh
+click-middle = alacritty -e nvim ~/Bin/display-manager.sh
+
+################################################################################
 
 [module/popup-calendar]
 type = custom/text

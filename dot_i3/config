@@ -247,6 +247,15 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # switch monitor output
 bindsym $mod+Shift+m exec --no-startup-id ~/.i3/scripts/switch-monitor.sh
 
+# Open display manager menu
+bindsym $mod+p exec ~/Bin/display-manager.sh
+
+# Restore primary monitor (DP-1) if projector is disconnected or off
+# bindsym $mod+Shift+p exec mons -o DP-1
+
+# Force-enable DP-1 (useful after projector-only mode)
+bindsym $mod+Shift+p exec xrandr --output DP-1 --auto --primary
+
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown

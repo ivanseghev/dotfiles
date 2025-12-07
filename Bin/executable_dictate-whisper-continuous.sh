@@ -4,7 +4,7 @@ WHISPER_BIN="/usr/bin/whisper-cli"
 MODEL="$HOME/Models/ggml-small.bin"
 TMP_WAV="/tmp/dictate.wav"
 TMP_TXT="/tmp/dictation.txt"
-LANG="ru"
+# LANG="ru"
 TIMEOUT_SEC=30  # auto-stop after 30 seconds
 
 # Start recording
@@ -27,8 +27,27 @@ yad --title="Dictation" \
 kill "$REC_PID" 2>/dev/null
 wait "$REC_PID" 2>/dev/null
 
+# Set language
+# while [[ $# -gt 0 ]]; do
+#   case "$1" in
+#     -l|--lang)
+#       LANG="$2"
+#       shift 2
+#       ;;
+#     *)
+#       shift
+#       ;;
+#   esac
+# done
+
+LANG=""
+
+if [[ "$1" == "-l" || "$1" == "--lang" ]]; then
+    LANG="$2"
+fi
+
 # Notify and transcribe
-notify-send "🔎 Dictation" "Transcribing..."
+notify-send "🔎 Dictation" "Transcribing $LANG..."
 "$WHISPER_BIN" -m "$MODEL" -f "$TMP_WAV" -l "$LANG" -nt -otxt -of "${TMP_TXT%.*}" > /dev/null
 TEXT=$(< "$TMP_TXT")
 
