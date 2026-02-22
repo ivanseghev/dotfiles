@@ -1,0 +1,11 @@
+[matching]
+'aerc' = {type = 'generic', value = ''}
+'vifm' = {type = 'generic', value = ''}
+'Nvim' = {type = 'generic', value = ''}
+'com.github.johnfactotum.Foliate' = ""
+'org.pwmt.zathura' = ""
+'Noi' = "󰟍"
+'shevan@dell:~' = {type = 'generic', value = ''}
+# '{pattern}' = { type = 'generic' | 'exact', value = '{icon}' }
+# pattern: Can either be the exact "app_name" (app_id/class) of the window or a regex string in the format of `"/{regex}/"` which will match the window "title".
+# icon: Your beautiful icon

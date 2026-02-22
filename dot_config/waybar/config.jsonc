@@ -1,0 +1,279 @@
+// -*- mode: jsonc -*-
+[
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 30, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 2, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "custom/rofi",
+        "custom/chrome",
+        "custom/noi",
+        "custom/screenshot",
+        "custom/translate",
+        "custom/dictate",
+        "custom/wordpress",
+        "sway/mode",
+        "sway/scratchpad"
+        // "custom/media"
+    ],
+    // "modules-left": ["custom/rofi", "custom/chrome", "custom/noi", "custom/rednotebook", "custom/foliate", "custom/screenshot", "custom/translate", "custom/dictate", "custom/wordpress", "custom/vifm", "custom/aerc"],
+    "modules-center": [
+        // "sway/window"
+        "sway/workspaces"
+    ],
+    "modules-right": [
+        // "mpd",
+        // "idle_inhibitor",
+        "custom/3dprint",
+        "custom/kdeconnect",
+        "custom/kindle",
+        "custom/bluetooth",
+        "pulseaudio",
+        // "network",
+        // "power-profiles-daemon",
+        // "cpu",
+        // "memory",
+        // "temperature",
+        // "backlight",
+        // "keyboard-state",
+        // "sway/language",
+        "custom/separator",
+        "clock",
+        "custom/separator",
+        "tray"
+        // "custom/power"
+    ],
+    // Modules configuration
+    // "sway/workspaces": {
+    //     "disable-scroll": true,
+    //     "all-outputs": true,
+    //     "warp-on-scroll": false,
+    //     "format": "{name}: {icon}",
+    //     "format-icons": {
+    //         "1": "",
+    //         "2": "",
+    //         "3": "",
+    //         "4": "",
+    //         "5": "",
+    //         "urgent": "",
+    //         "focused": "",
+    //         "default": ""
+    //     }
+    // },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+    "sway/language": {
+        "format": "{}",
+        "tooltip": false,
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+    "mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "unknown-tag": "N/A",
+        "interval": 5,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "tray": {
+        "icon-size": 22, // Matches your Polybar tray-size 
+        "spacing": 8,
+        "show-passive-items": true
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        "format": "{:%a, %d %b, %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/separator": {
+        "format": " | "
+    },
+    "custom/rofi": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "rofi -show window",
+        "on-click-right": "xfce4-appfinder"
+    },
+    "custom/chrome": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "google-chrome-stable"
+    },
+    "custom/noi": {
+        "format": "󰟍",
+        "tooltip": false,
+        "on-click": "noi-desktop"
+    },
+    "custom/translate": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/Bin/translate-rofi.sh",
+        "on-click-middle": "alacritty -e nvim ~/Bin/translate-rofi.sh"
+    },
+    "custom/dictate": {
+        "format": "󰔊",
+        "tooltip": false,
+        "on-click": "~/Bin/dictate-whisper-continuous.sh -l ru",
+        "on-click-middle": "alacritty -e nvim ~/Bin/dictate-whisper-continuous.sh",
+        "on-click-right": "~/Bin/dictate-whisper-continuous.sh -l en"
+    },
+    "custom/screenshot": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "flameshot gui"
+    },
+    "custom/wordpress": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "alacritty -e ~/Bin/wp_clean.sh"
+    },
+    "custom/bluetooth": {
+        "format": "󰂯",
+        "tooltip": false,
+        "on-click": "~/Bin/bluetooth.sh --list-devices",
+        "on-click-middle": "alacritty -e nvim ~/Bin/bluetooth.sh",
+        "on-click-right": "~/Bin/bluetooth.sh --menu"
+    },
+    "custom/3dprint": {
+        "format": "󰹜",
+        "tooltip": false,
+        "on-click": "~/Bin/3dprint.sh",
+        "on-click-middle": "alacritty -e nvim ~/Bin/3dprint.sh"
+    },
+    "custom/kdeconnect": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/Bin/kdeconnect.sh --menu",
+        "on-click-middle": "alacritty -e nvim ~/Bin/kdeconnect.sh",
+        "on-click-right": "~/Bin/kdeconnect.sh --device-menu"
+    },
+    "custom/kindle": {
+        "format": "󱚄",
+        "tooltip": false,
+        "on-click": "~/Bin/send_to_kindle.sh",
+        "on-click-middle": "alacritty -e nvim ~/Bin/send_to_kindle.sh"
+    }
+  },
+  {
+        "layer": "top",
+        "position": "bottom",
+        "height": 30,
+        // "modules-left": ["custom/cylon", "idle_inhibitor", "mpd"],
+        "modules-left": ["custom/pacui", "custom/separator", "custom/updates"],
+        "modules-right": ["temperature", "cpu", "memory", "custom/separator", "custom/weather", "custom/separator", "sway/language", "custom/separator", "custom/wlogout"],
+
+        "cpu": {
+            "interval": 60,
+            "format": ": {usage}%"
+        },
+
+        "memory": {
+            "interval": 30,
+            "format": ": {percentage}%",
+            "on-click": "alacritty -e htop -s PERCENT_MEM"
+        },
+
+        "temperature": {
+            "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input",
+            "critical-threshold": 70,
+            "format": "{icon} {temperatureC}°C",
+            "format-icons": ["", "", "", "", ""]
+        },
+        "custom/separator": {
+            "format": " | "
+        },
+        "custom/pacui": {
+            "format": "󱙝",
+            "tooltip": false,
+            "on-click": "alacritty -e pacui"
+        },
+        "custom/updates": {
+            "format": "{icon} {0}",
+            "return-type": "json",
+            "format-icons": {
+            "has-updates": "󱍷",
+            "updated": "󰂪"
+            },
+            "exec-if": "which waybar-module-pacman-updates",
+            "exec": "waybar-module-pacman-updates --interval-seconds 3600 --network-interval-seconds 3600"
+        },
+        "custom/weather": {
+            "exec": "~/.config/sway/scripts/openweathermap-fullfeatured.sh",
+            "interval": 3600,
+            "format":  "{text}",
+            "tooltip": false
+        },
+        "custom/wlogout": {
+            "format": " ",
+            "tooltip": false,
+            "on-click": "wlogout -c 5 -r 5 -p layer-shell",
+            "on-click-right": "wlogout -c 5 -r 5 -p layer-shell"
+        }
+    }
+]
+

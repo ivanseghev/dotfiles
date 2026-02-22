@@ -1,0 +1,87 @@
+* {
+    font-family: "DejaVu Sans Mono", "Hack Nerd Font";
+    font-size: 17px;
+}
+
+label {
+    all: unset;
+}
+button {
+    all: unset;
+}
+
+window#waybar {
+    background-color: #1D1D20; /* colors.background */
+    color: #eeeeee;            /* colors.foreground */
+    border-bottom: 0px;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    background-color: transparent;
+    color: #eeeeee;
+}
+
+#workspaces button.focused {
+    border-bottom: 2px solid #6790eb; /* label-focused-underline */
+}
+
+#workspaces button.urgent {
+    color: #db104e;
+}
+
+
+#tray {
+    background-color: #1D1D20; /* Matches your background  */
+    color: #eeeeee;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: highlight;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #d08770; /* Matches your 'alert' color  */
+}
+
+/* This helps if icons are inherently dark */
+#tray menu {
+    background-color: #1D1D20;
+    color: #eeeeee;
+}
+
+#custom-rofi,
+#custom-chrome,
+#custom-noi,
+#custom-screenshot,
+#custom-dictate,
+#custom-translate,
+#custom-wordpress,
+#custom-pacui,
+#custom-updates,
+#custom-3dprint,
+#custom-kdeconnect,
+#custom-kindle,
+#custom-bluetooth,
+#pulseaudio,
+#memory,
+#cpu,
+#temperature,
+#sway-language {
+    padding:  10px;
+     /* margin: 0 5px; */
+}
+
+/* Matching your separator style */
+#custom-separator {
+    color: #6790EB;
+}
+
+#custom-updates {
+	background-color: transparent;
+}
+
+#custom-weather {
+    font-family: "Weather Icons";
+}
