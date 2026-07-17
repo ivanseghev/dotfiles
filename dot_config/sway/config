@@ -42,8 +42,9 @@ bindsym $mod+Escape kill
 
 # start program launcher
 bindsym $mod+d exec --no-startup-id dmenu_recency
-bindsym $mod+shift+d exec --no-startup-id rofi -show run
-bindsym $mod+Tab exec --no-startup-id rofi -show window
+bindsym $mod+shift+d exec --no-startup-id rofi -show drun
+# bindsym $mod+Tab exec --no-startup-id rofi -show window
+# bindsym $mod+Shift+d exec alacritty -e /usr/bin/sway-launcher-desktop
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -58,8 +59,11 @@ bindsym $mod+z exec --no-startup-id morc_menu
 #exec --no-startup-id pa-applet
 #bindsym $mod+Ctrl+m exec pavucontrol
 
+## volume // Volume increase 5% // <Fn> F12 ##
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/sway/scripts/volume_notify.sh pactl set-sink-volume @DEFAULT_SINK@ +5%
+## volume // Volume decrease 5% // <Fn> F11 ##
 bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/sway/scripts/volume_notify.sh pactl set-sink-volume @DEFAULT_SINK@ -5%
+## volume // Mute volume // <Fn> F10 ##
 bindsym XF86AudioMute        exec --no-startup-id ~/.config/sway/scripts/volume_notify.sh pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 ################################################################################################
@@ -67,6 +71,9 @@ bindsym XF86AudioMute        exec --no-startup-id ~/.config/sway/scripts/volume_
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+
+# Grammar & Lexical Check
+bindsym $mod+g exec /home/shevan/Bin/grammar_fix.sh
 
 # Start Applications
 # bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
@@ -238,24 +245,36 @@ for_window [class="Pavucontrol"] floating enable
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [app_id="yad"] floating enable, sticky enable, border normal
+for_window [app_id="^launcher$"] floating enable, sticky enable, border normal
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
-# reload the configuration file
+## sway // Reload // <Super> Shift c ## reload the configuration file
 bindsym $mod+Shift+c reload
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+## sway // Restart // <Super> Shift r ## restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-# exit i3 (logs you out of your X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+## sway // Exit // <Super> Shift e ## exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec ~/.config/sway/scripts/power_menu.sh
 
-bindsym F2 exec ~/Bin/toggle-app.sh vifm
-bindsym F3 exec ~/Bin/toggle-app.sh aerc
+## Launch // Vifm // <Super> F2 ##
+bindsym $mod+F2 exec ~/Bin/toggle-app.sh vifm
+## Launch // Aerc // <Super> F3 ##
+bindsym $mod+F3 exec ~/Bin/toggle-app.sh aerc
 # switch monitor output
-# bindsym $mod+Shift+m exec --no-startup-id ~/.i3/scripts/switch-monitor.sh
+bindsym $mod+Shift+m exec ~/.config/sway/scripts/switch-monitor.sh
+
+# Start the swtchr daemon.
+exec_always swtchrd
+
+# Set up keybinds to open the window switcher.
+bindsym $mod+Tab mode swtchr; exec swtchr
+bindsym $mod+Shift+Tab mode swtchr; exec swtchr
+
+# This is important! More information below.
+mode swtchr bindsym Backspace mode default
 
 # Open display manager menu
 # bindsym $mod+p exec ~/Bin/display-manager.sh
@@ -323,7 +342,7 @@ exec_always swayidle -w timeout 900 'swaymsg "output * dpms off"' resume 'swayms
 
 seat seat0 xcursor_theme "Bibata-Original-Classic" 24
 
-exec --no-startup-id alacritty -e vifm
+# exec --no-startup-id alacritty -e vifm
 exec sworkstyle &> /tmp/sworkstyle.log
 # exec --no-startup-id alacritty -e tmuxp load ~/.tmuxp/main.yaml
 # exec --no-startup-id sleep 5 && volumeicon
@@ -331,11 +350,15 @@ exec --no-startup-id alacritty -e aerc
 
 exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
 
-bindsym F1       exec swayr switch-window
-# bindsym $mod+Delete      exec swayr quit-window
+## sway // Swayr switch window // <Super> F1 ##
+bindsym $mod+F1       exec swayr switch-window
+## sway // Swayr quit window // <Super> Delete ##
+bindsym $mod+Delete      exec swayr quit-window
 # bindsym $mod+Tab         exec swayr switch-to-urgent-or-lru-window
-# bindsym $mod+Next        exec swayr next-window all-workspaces
-# bindsym $mod+Prior       exec swayr prev-window all-workspaces
+## sway // Swayr next window // <Super> Next ##
+bindsym $mod+Next        exec swayr next-window all-workspaces
+## sway // Swayr prev window // <Super> Prior ##
+bindsym $mod+Prior       exec swayr prev-window all-workspaces
 # bindsym $mod+Shift+Space exec swayr switch-workspace-or-window
 # bindsym $mod+c           exec swayr execute-swaymsg-command
 # bindsym $mod+Shift+c     exec swayr execute-swayr-command

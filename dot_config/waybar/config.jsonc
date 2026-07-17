@@ -3,7 +3,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 30, // Waybar height (to be removed for auto height)
+    // "height": 41, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 2, // Gaps between modules (4px)
     // Choose the order of the modules
@@ -23,12 +23,17 @@
     "modules-center": [
         // "sway/window"
         "sway/workspaces"
+        // "niri/workspaces"
+        // "cffi/niri-taskbar"
+        // "cffi/niri-workspaces-enhanced"
     ],
     "modules-right": [
         // "mpd",
         // "idle_inhibitor",
+        // "custom/remontoire",
         "custom/3dprint",
         "custom/kdeconnect",
+        "custom/display",
         "custom/kindle",
         "custom/bluetooth",
         "pulseaudio",
@@ -63,6 +68,39 @@
     //         "default": ""
     //     }
     // },
+    "niri/workspaces": {
+        "format": "{name}: {icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+    "cffi/niri-taskbar": {
+        "module_path": "/usr/lib/waybar/libniri_taskbar.so",
+        "module_name": "niri_taskbar"
+    },
+    "cffi/niri-workspaces-enhanced": {
+      "module_path": "/usr/lib/waybar/libwaybar_niri_workspaces_enhanced.so",
+      "format": "{index-and-name}{separator}{window-icons}",
+      "window-icon-format": {
+        "default": "{icon}",
+        "urgent": "<span foreground='red'>{icon}</span>",
+         "focused": "<span foreground='#6790eb'>{icon}</span>"
+      },
+      "window-icons": {
+        "com.mitchellh.ghostty": "",
+        "darktable": "",
+        "foot": "",
+        "google-chrome": ""
+      },
+      "window-icon-default": "*"
+    },
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
@@ -86,32 +124,6 @@
         "format-icons": ["", ""],
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -156,7 +168,7 @@
     "custom/rofi": {
         "format": "",
         "tooltip": false,
-        "on-click": "rofi -show window",
+        "on-click": "rofi -show drun",
         "on-click-right": "xfce4-appfinder"
     },
     "custom/chrome": {
@@ -195,9 +207,13 @@
     "custom/bluetooth": {
         "format": "󰂯",
         "tooltip": false,
-        "on-click": "~/Bin/bluetooth.sh --list-devices",
-        "on-click-middle": "alacritty -e nvim ~/Bin/bluetooth.sh",
-        "on-click-right": "~/Bin/bluetooth.sh --menu"
+        "on-click": "alacritty -e bluetuith"
+    },
+    "custom/remontoire": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/.config/sway/scripts/remontoire_keybinding_viewer.sh",
+        "on-click-middle": "alacritty -e nvim ~/.config/sway/scripts/remontoire_keybinding_viewer.sh",
     },
     "custom/3dprint": {
         "format": "󰹜",
@@ -215,18 +231,63 @@
     "custom/kindle": {
         "format": "󱚄",
         "tooltip": false,
-        "on-click": "~/Bin/send_to_kindle.sh",
+        "on-click": "alacritty -e ~/Bin/send_to_kindle.sh",
         "on-click-middle": "alacritty -e nvim ~/Bin/send_to_kindle.sh"
+    },
+    "custom/display": {
+        "format": "冷",
+        "tooltip": false,
+        "on-click": "~/Bin/display-manager-sway.sh",
+        "on-click-middle": "alacritty -e nvim ~/Bin/display-manager-sway.sh"
     }
   },
   {
         "layer": "top",
         "position": "bottom",
-        "height": 30,
+        // "height": 30,
         // "modules-left": ["custom/cylon", "idle_inhibitor", "mpd"],
-        "modules-left": ["custom/pacui", "custom/separator", "custom/updates"],
-        "modules-right": ["temperature", "cpu", "memory", "custom/separator", "custom/weather", "custom/separator", "sway/language", "custom/separator", "custom/wlogout"],
-
+        "modules-left": ["custom/pacui", "custom/separator", "custom/updates", "custom/separator", "mpd"],
+        "modules-right": [
+            "temperature",
+            "cpu",
+            "memory",
+            "custom/separator",
+            "custom/weather",
+            "custom/separator",
+            "sway/language",
+            // "niri/language",
+            "custom/separator",
+            "custom/wlogout"
+        ],
+        "mpd": {
+            "server": "192.168.1.11",
+            "port": 6600,
+            "format": "{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ({songPosition}|{queueLength}) {volume}% ",
+            "format-disconnected": "Disconnected ",
+            "format-stopped": "Stopped ",
+            "unknown-tag": "N/A",
+            "interval": 5,
+            "on-click": "alacritty -T \"ncmpc\" --class \"mpd\" -e ncmpc",
+            "consume-icons": {
+                "on": " "
+            },
+            "random-icons": {
+                "off": "<span color=\"#f53c3c\"></span> ",
+                "on": " "
+            },
+            "repeat-icons": {
+                "on": " "
+            },
+            "single-icons": {
+                "on": "1 "
+            },
+            "state-icons": {
+                "paused": "",
+                "playing": ""
+            },
+            "tooltip-format": "MPD (connected)",
+            "tooltip-format-disconnected": "MPD (disconnected)"
+        },
         "cpu": {
             "interval": 60,
             "format": ": {usage}%"

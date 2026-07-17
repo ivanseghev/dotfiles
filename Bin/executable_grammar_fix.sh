@@ -15,12 +15,16 @@ DOCKER_LOCAL_ENDPOINT="http://localhost:8000/v1/chat/completions"
 # ALL_MODELS="SYSTEM:llama-3.2-3B-Instruct-Q4_K_M!DOCKER:llama-3.2-3B-Instruct-Q4_K_M!OPENROUTER:mistral-7b-instruct!OPENROUTER:llama-3-8b-instruct!GROQ:llama-3.1-8b-instant!GROQ:llama-3.3-70b-versatile!GROQ:gemma2-9b-it"
 ALL_MODELS="GROQ:llama-3.3-70b-versatile!GROQ:gemma2-9b-it!OPENROUTER:mistralai/mistral-7b-instruct:free!OPENROUTER:meta-llama/llama-3.3-70b-instruct:free!DOCKER:llama-3.2-3B-Instruct-Q4_K_M!SYSTEM:llama-3.2-3B-Instruct-Q4_K_M"
 
+# === GET SELECTION ===
+# Grab current selection from primary clipboard (Wayland or X11)
+INITIAL_TEXT=$(wl-paste --primary 2>/dev/null || xclip -o -sel primary 2>/dev/null || echo "")
+
 # === YAD FORM ===
 FORM=$(yad --width=800 --height=500 --center \
     --title="Grammar & Lexical Check" \
     --form \
     --field="Model:CB" "$ALL_MODELS" \
-    --field="Enter text:TXT" "")
+    --field="Enter text:TXT" "$INITIAL_TEXT")
 
 # Cancel pressed
 [ $? -ne 0 ] && exit 0
@@ -111,4 +115,4 @@ yad --width=600 --height=400 \
 CORRECTED=$(echo "$RESPONSE" | sed -n '/1\. Corrected text:/,/2\./p' | sed '1d;$d' | sed '/^$/d')
 
 # Copy to clipboard (Linux X11/Wayland with xclip or wl-copy)
-echo -n "$CORRECTED" | xclip -selection clipboard
+echo -n "$CORRECTED" | wl-copy 2>/dev/null || xclip -sel clip 2>/dev/null

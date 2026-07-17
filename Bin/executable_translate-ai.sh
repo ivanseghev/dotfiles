@@ -140,4 +140,4 @@ yad --width=600 --height=400 \
 # CORRECTED=$(echo "$RESPONSE" | sed -n '/1\. Corrected text:/,/2\./p' | sed '1d;$d' | sed '/^$/d')
 
 # Copy to clipboard (Linux X11/Wayland with xclip or wl-copy)
-echo "$RESPONSE" | xclip -selection clipboard
+echo "$RESPONSE" | wl-copy

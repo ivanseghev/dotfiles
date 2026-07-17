@@ -20,13 +20,14 @@ stl_fzf_picker() {
 
     find . -type f -iname "*.stl" | sed "s|^\./||" | \
     fzf --layout=reverse \
-        --prompt="STL > " \
+        --prompt="Enter runs Prusa Slicer, Alt-Enter runs FSTL > " \
         --preview-window=right:60% \
         --preview="
           simple-thumbnailer-stl -i {} -o '"$PREVIEW"' -s 512 >/dev/null 2>&1 &&
           chafa '"$PREVIEW"'
         " \
-        --bind "enter:execute(prusa-slicer {} >/dev/null 2>&1 &)"
+        --bind "enter:execute(prusa-slicer {} >/dev/null 2>&1 &)" \
+        --bind "alt-enter:execute(fstl {} >/dev/null 2>&1 &)"
   '
 }
 

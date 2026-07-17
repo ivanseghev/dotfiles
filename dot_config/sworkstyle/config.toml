@@ -6,6 +6,10 @@
 'org.pwmt.zathura' = ""
 'Noi' = "󰟍"
 'shevan@dell:~' = {type = 'generic', value = ''}
+'ssh' = {type = 'generic', value = '󰒍'}
+'mpd' = {type = 'generic', value = ''}
+'ncmpc' = {type = 'generic', value = ''}
+'dell' = {type = 'generic', value = ''}
 # '{pattern}' = { type = 'generic' | 'exact', value = '{icon}' }
 # pattern: Can either be the exact "app_name" (app_id/class) of the window or a regex string in the format of `"/{regex}/"` which will match the window "title".
 # icon: Your beautiful icon

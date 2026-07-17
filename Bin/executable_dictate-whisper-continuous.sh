@@ -55,7 +55,7 @@ if [[ -z "$TEXT" ]]; then
   notify-send "❗ Dictation failed" "No speech recognized"
   exit 1
 fi
-
-echo "$TEXT" | xclip -selection clipboard
+# copy wayland clipboard
+echo "$TEXT" | wl-copy
 notify-send "✅ Dictation complete" "$TEXT"
 

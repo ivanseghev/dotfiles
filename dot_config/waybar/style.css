@@ -22,14 +22,14 @@ window#waybar {
     color: #eeeeee;
 }
 
-#workspaces button.focused {
+#workspaces button.focused,
+#workspaces button.active {
     border-bottom: 2px solid #6790eb; /* label-focused-underline */
 }
 
 #workspaces button.urgent {
-    color: #db104e;
+  border-bottom: 3px solid alpha(red, 0.1);
 }
-
 
 #tray {
     background-color: #1D1D20; /* Matches your background  */
@@ -60,10 +60,12 @@ window#waybar {
 #custom-wordpress,
 #custom-pacui,
 #custom-updates,
+#custom-remontoire,
 #custom-3dprint,
 #custom-kdeconnect,
 #custom-kindle,
 #custom-bluetooth,
+#custom-display,
 #pulseaudio,
 #memory,
 #cpu,
