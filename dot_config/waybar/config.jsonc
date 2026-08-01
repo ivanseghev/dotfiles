@@ -247,10 +247,12 @@
         // "height": 30,
         // "modules-left": ["custom/cylon", "idle_inhibitor", "mpd"],
         "modules-left": ["custom/pacui", "custom/separator", "custom/updates", "custom/separator", "mpd"],
+        "modules-center": ["custom/systemctl-tui", "custom/separator", "custom/rofi-tmux", "custom/separator", "custom/notes"],
         "modules-right": [
             "temperature",
             "cpu",
             "memory",
+            "disk",
             "custom/separator",
             "custom/weather",
             "custom/separator",
@@ -292,11 +294,31 @@
             "interval": 60,
             "format": ": {usage}%"
         },
+        "disk": {
+	        "interval": 3600,
+            "format": "󰋊: {percentage_used}%"
+        }, 
 
         "memory": {
             "interval": 30,
             "format": ": {percentage}%",
             "on-click": "alacritty -e htop -s PERCENT_MEM"
+        },
+
+        "custom/notes": {
+            "format": "",
+            "tooltip": false,
+            "on-click": "alacritty -e tjournal"
+        },
+        "custom/systemctl-tui": {
+            "format": "",
+            "tooltip": false,
+            "on-click": "alacritty -e systemctl-tui",
+        },
+        "custom/rofi-tmux": {
+            "format": "",
+            "tooltip": false,
+            "on-click": "~/.config/sway/scripts/rofi-tmux.sh",
         },
 
         "temperature": {

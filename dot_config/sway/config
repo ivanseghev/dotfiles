@@ -324,6 +324,7 @@ input "type:keyboard" {
 }
 
 output "*" bg ~/.config/sway/backgrounds/wallhaven-g7mrm3.png fill
+# output * bg ~/.config/sway/bg_cheat.png center #1d1d20
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1

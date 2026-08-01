@@ -51,28 +51,8 @@ window#waybar {
     color: #eeeeee;
 }
 
-#custom-rofi,
-#custom-chrome,
-#custom-noi,
-#custom-screenshot,
-#custom-dictate,
-#custom-translate,
-#custom-wordpress,
-#custom-pacui,
-#custom-updates,
-#custom-remontoire,
-#custom-3dprint,
-#custom-kdeconnect,
-#custom-kindle,
-#custom-bluetooth,
-#custom-display,
-#pulseaudio,
-#memory,
-#cpu,
-#temperature,
-#sway-language {
-    padding:  10px;
-     /* margin: 0 5px; */
+.module:not(#workspaces):not(#tray):not(#custom-separator) {
+    padding: 10px;
 }
 
 /* Matching your separator style */
